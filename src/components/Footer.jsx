@@ -14,6 +14,7 @@ import { ChevronRight } from 'lucide-react';
 export default function Footer() {
   const quickLinks = [
     { name: 'Home', path: '/#home' },
+    { name: 'Officer Login', path: '/login' },
     { name: 'About Us', path: '/about' },
     { name: 'Intelligence Reports', path: '/reports' },
     { name: 'Audit Logs', path: '/audit' },

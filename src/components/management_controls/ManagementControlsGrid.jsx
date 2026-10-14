@@ -20,6 +20,27 @@ import OnlineApplicationManagementControl from './online_application_management_
 import CheckApplicationStatusControl from './check_application_status_control/CheckApplicationStatusControl';
 import DemoManagementControl from './demo_management_control/DemoManagementControl';
 
+import JourneyGalleryPage from './gallery_management_control/Gallery Management Control/Journey Gallery/JourneyGalleryPage';
+import CourseGalleryPage from './gallery_management_control/Gallery Management Control/Course Gallery/CourseGalleryPage';
+import StudyGalleryPage from './gallery_management_control/Gallery Management Control/Study Gallery/StudyGalleryPage';
+import IntensiveGalleryPage from './gallery_management_control/Gallery Management Control/Intensive Gallery/IntensiveGalleryPage';
+import PhotoProjectGalleryPage from './gallery_management_control/Gallery Management Control/Photo Project Gallery/PhotoProjectGalleryPage';
+import EventGalleryPage from './gallery_management_control/Gallery Management Control/Event Gallery/EventGalleryPage';
+import EmployeeGalleryPage from './gallery_management_control/Gallery Management Control/Employee Gallery/EmployeeGalleryPage';
+import AnnualCelebrationGalleryPage from './gallery_management_control/Gallery Management Control/Annual Celebration Gallery/AnnualCelebrationGalleryPage';
+import AchievementGalleryPage from './gallery_management_control/Gallery Management Control/Achievement Gallery/AchievementGalleryPage';
+import WorkHighlightGalleryPage from './gallery_management_control/Gallery Management Control/Work Highlight Gallery/WorkHighlightGalleryPage';
+import SuccessStoryGalleryPage from './gallery_management_control/Gallery Management Control/Success Story Gallery/SuccessStoryGalleryPage';
+import WorkplaceGalleryPage from './gallery_management_control/Gallery Management Control/Workplace Gallery/WorkplaceGalleryPage';
+import SeminarWorkshopGalleryPage from './gallery_management_control/Gallery Management Control/Seminar & Workshop Gallery/SeminarWorkshopGalleryPage';
+import CyberAwarenessGalleryPage from './gallery_management_control/Gallery Management Control/Cyber Awareness Gallery/CyberAwarenessGalleryPage';
+import OfficeCultureGalleryPage from './gallery_management_control/Gallery Management Control/Office Culture Gallery/OfficeCultureGalleryPage';
+import AwardRecognitionGalleryPage from './gallery_management_control/Gallery Management Control/Award & Recognition Gallery/AwardRecognitionGalleryPage';
+import ProductLaunchGalleryPage from './gallery_management_control/Gallery Management Control/Product Launch Gallery/ProductLaunchGalleryPage';
+import TeamMomentGalleryPage from './gallery_management_control/Gallery Management Control/Team Moment Gallery/TeamMomentGalleryPage';
+import MediaPressReleasePage from './gallery_management_control/Gallery Management Control/Media & Press Release/MediaPressReleasePage';
+import StudentActivitiesGalleryPage from './gallery_management_control/Gallery Management Control/Student Activities Gallery/StudentActivitiesGalleryPage';
+
 const mainDashboardCards = [
   { id: 'home', title: 'Home Management Control', description: 'Configure hero sliders, announcements ticker, quick links, and featured widgets.', Icon: Home, theme: 'blue' },
   { id: 'about-us', title: 'About Us Management Control', description: 'Manage organization mission, vision, leadership team profiles, and milestones.', Icon: Building2, theme: 'indigo' },
@@ -809,26 +830,26 @@ const victimRightsSupportCards = [
 ];
 
 const galleryTopCards = [
-  { title: 'Journey Gallery', description: 'Photos showcasing the organizational journey.', Icon: Image, theme: 'blue' },
-  { title: 'Course Gallery', description: 'Photos from various courses and classes.', Icon: Play, theme: 'indigo' },
-  { title: 'Student Gallery', description: 'Photos featuring our students.', Icon: Users, theme: 'emerald' },
-  { title: 'Internship Gallery', description: 'Photos from internship programs.', Icon: Briefcase, theme: 'violet' },
-  { title: 'Project Gallery', description: 'Photos showcasing completed projects.', Icon: Layout, theme: 'rose' },
-  { title: 'Event Gallery', description: 'Photos from major events and gatherings.', Icon: Calendar, theme: 'amber' },
-  { title: 'Employees Gallery', description: 'Photos featuring our dedicated employees.', Icon: UserCheck, theme: 'cyan' },
-  { title: 'Annual Celebrations Gallery', description: 'Photos from annual organizational celebrations.', Icon: Award, theme: 'blue' },
-  { title: 'Achievement Gallery', description: 'Photos highlighting key achievements.', Icon: Target, theme: 'indigo' },
-  { title: 'Work Highlights Gallery', description: 'Photos showcasing important work highlights.', Icon: Activity, theme: 'emerald' },
-  { title: 'Success Stories Gallery', description: 'Photos of success stories and milestones.', Icon: Star, theme: 'violet' },
-  { title: 'Workplace Gallery', description: 'Photos of the workplace and office environment.', Icon: Building2, theme: 'rose' },
-  { title: 'Seminars & Workshops Gallery', description: 'Photos from seminars and workshops.', Icon: Users, theme: 'amber' },
-  { title: 'Cyber Awareness Gallery', description: 'Photos from cyber awareness campaigns.', Icon: Shield, theme: 'cyan' },
-  { title: 'Office Culture Gallery', description: 'Photos showcasing the internal office culture.', Icon: Heart, theme: 'blue' },
-  { title: 'Awards & Recognition Gallery', description: 'Photos from award and recognition ceremonies.', Icon: Award, theme: 'indigo' },
-  { title: 'Product Launches Gallery', description: 'Photos from new product launches.', Icon: Zap, theme: 'emerald' },
-  { title: 'Team Moments Gallery', description: 'Candid photos of team moments.', Icon: Users, theme: 'violet' },
-  { title: 'Media & Press Gallery', description: 'Photos from media and press interactions.', Icon: Globe, theme: 'rose' },
-  { title: 'Student Activities Gallery', description: 'Photos of extracurricular student activities.', Icon: Activity, theme: 'amber' },
+  { id: 'journey-gallery', title: 'Journey Gallery', description: 'Photos showcasing the organizational journey.', Icon: Image, theme: 'blue' },
+  { id: 'course-gallery', title: 'Course Gallery', description: 'Photos from various courses and classes.', Icon: Play, theme: 'indigo' },
+  { id: 'study-gallery', title: 'Study Gallery', description: 'Photos featuring our students and academic studies.', Icon: Users, theme: 'emerald' },
+  { id: 'intensive-gallery', title: 'Intensive Gallery', description: 'Photos from intensive bootcamps and training programs.', Icon: Briefcase, theme: 'violet' },
+  { id: 'photo-project-gallery', title: 'Photo Project Gallery', description: 'Photos showcasing completed projects and field work.', Icon: Layout, theme: 'rose' },
+  { id: 'event-gallery', title: 'Event Gallery', description: 'Photos from major events and gatherings.', Icon: Calendar, theme: 'amber' },
+  { id: 'employee-gallery', title: 'Employee Gallery', description: 'Photos featuring our dedicated employees.', Icon: UserCheck, theme: 'cyan' },
+  { id: 'annual-celebration-gallery', title: 'Annual Celebration Gallery', description: 'Photos from annual organizational celebrations.', Icon: Award, theme: 'blue' },
+  { id: 'achievement-gallery', title: 'Achievement Gallery', description: 'Photos highlighting key achievements.', Icon: Target, theme: 'indigo' },
+  { id: 'work-highlight-gallery', title: 'Work Highlight Gallery', description: 'Photos showcasing important work highlights.', Icon: Activity, theme: 'emerald' },
+  { id: 'success-story-gallery', title: 'Success Story Gallery', description: 'Photos of success stories and milestones.', Icon: Star, theme: 'violet' },
+  { id: 'workplace-gallery', title: 'Workplace Gallery', description: 'Photos of the workplace and office environment.', Icon: Building2, theme: 'rose' },
+  { id: 'seminar-workshop-gallery', title: 'Seminar & Workshop Gallery', description: 'Photos from seminars and workshops.', Icon: Users, theme: 'amber' },
+  { id: 'cyber-awareness-gallery', title: 'Cyber Awareness Gallery', description: 'Photos from cyber awareness campaigns.', Icon: Shield, theme: 'cyan' },
+  { id: 'office-culture-gallery', title: 'Office Culture Gallery', description: 'Photos showcasing the internal office culture.', Icon: Heart, theme: 'blue' },
+  { id: 'award-recognition-gallery', title: 'Award & Recognition Gallery', description: 'Photos from award and recognition ceremonies.', Icon: Award, theme: 'indigo' },
+  { id: 'product-launch-gallery', title: 'Product Launch Gallery', description: 'Photos from new product launches.', Icon: Zap, theme: 'emerald' },
+  { id: 'team-moment-gallery', title: 'Team Moment Gallery', description: 'Candid photos of team moments.', Icon: Users, theme: 'violet' },
+  { id: 'media-press-release', title: 'Media & Press Release', description: 'Photos from media and press interactions.', Icon: Globe, theme: 'rose' },
+  { id: 'student-activities-gallery', title: 'Student Activities Gallery', description: 'Photos of extracurricular student activities.', Icon: Activity, theme: 'amber' },
 ];
 
 const photoActionCards = [
@@ -994,7 +1015,7 @@ const developerActionCards = [
 ];
 
 export default function ManagementControlsGrid() {
-  const { currentView, navigateTo, goBack } = useScrollNavigation('main');
+  const { currentView, navigateTo, goBack } = useScrollNavigation('main', { scope: 'management' });
   const [activeSubMenu, setActiveSubMenu] = useState(null);
 
   return (
@@ -1562,29 +1583,36 @@ export default function ManagementControlsGrid() {
               <PremiumCard 
                 key={idx} 
                 {...card} 
-                onClick={() => navigateTo('gallery-actions')} 
+                onClick={() => navigateTo(card.id)} 
               />
             ))}
           </div>
         </>
       )}
 
-      {currentView === 'gallery-actions' && (
-        <>
-          <PageHeaderWithBack
-            sectionNumber="24"
-            title="Photo Actions"
-            description="Add, view, manage, and bulk upload photos for the selected gallery."
-            onBack={() => goBack('gallery')}
-            backLabel="Back"
-          />
+      {currentView === 'journey-gallery' && <JourneyGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'course-gallery' && <CourseGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'study-gallery' && <StudyGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'intensive-gallery' && <IntensiveGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'photo-project-gallery' && <PhotoProjectGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'event-gallery' && <EventGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'employee-gallery' && <EmployeeGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'annual-celebration-gallery' && <AnnualCelebrationGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'achievement-gallery' && <AchievementGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'work-highlight-gallery' && <WorkHighlightGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'success-story-gallery' && <SuccessStoryGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'workplace-gallery' && <WorkplaceGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'seminar-workshop-gallery' && <SeminarWorkshopGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'cyber-awareness-gallery' && <CyberAwarenessGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'office-culture-gallery' && <OfficeCultureGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'award-recognition-gallery' && <AwardRecognitionGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'product-launch-gallery' && <ProductLaunchGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'team-moment-gallery' && <TeamMomentGalleryPage onBack={() => goBack('gallery')} />}
+      {currentView === 'media-press-release' && <MediaPressReleasePage onBack={() => goBack('gallery')} />}
+      {currentView === 'student-activities-gallery' && <StudentActivitiesGalleryPage onBack={() => goBack('gallery')} />}
 
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4 xl:gap-5">
-            {photoActionCards.map((card, idx) => (
-              <PremiumCard key={idx} index={idx} {...card} onClick={() => console.log(`Clicked ${card.title}`)} />
-            ))}
-          </div>
-        </>
+      {currentView === 'gallery-actions' && (
+        <JourneyGalleryPage onBack={() => goBack('gallery')} />
       )}
 
       {currentView === 'header' && (

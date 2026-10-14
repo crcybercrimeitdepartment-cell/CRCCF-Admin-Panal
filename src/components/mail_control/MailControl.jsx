@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
-  User, Settings, Shield, EyeOff, Phone, Lock, 
-  Edit3, Inbox, Send, XOctagon, History, Filter, Bell, ArrowLeft 
+  User, Settings, Shield, EyeOff, Lock, 
+  Inbox, Send, XOctagon, History, Filter, Bell,
+  Smartphone, Key, ShieldAlert, Activity, Database,
+  FileEdit, MailQuestion, Calendar, PenTool
 } from 'lucide-react';
+import PageHeaderWithBack from '../common/PageHeaderWithBack';
+import { useScrollNavigation } from '../common/useScrollNavigation';
 
 const colorThemes = {
   blue: { iconBg: 'bg-gradient-to-br from-[#1D6CE0] to-[#0B3B73]', text: 'text-[#1D6CE0]', borderHover: 'border-[#1D6CE0]/50', glow: 'from-[#1D6CE0]/15', stripes: 'from-[#1D6CE0] to-[#0B3B73]' },
@@ -75,11 +79,8 @@ const Card = ({ title, description, Icon, theme = 'blue', onClick }) => {
   );
 };
 
-import PageHeaderWithBack from '../common/PageHeaderWithBack';
-import { useScrollNavigation } from '../common/useScrollNavigation';
-
 export default function MailControl({ onBack }) {
-  const { currentView, navigateTo, goBack } = useScrollNavigation('main');
+  const { currentView, navigateTo, goBack } = useScrollNavigation('main', { scope: 'mail' });
 
   const mainCards = [
     { id: 'profile', title: 'Email Account Profile', description: 'Manage your email profile, signatures, and personal details.', Icon: User, theme: 'blue' },
@@ -164,7 +165,7 @@ export default function MailControl({ onBack }) {
 
       {currentView === 'sending' && (
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4 xl:gap-5">
-          {sendingControlsCards.map((card, idx) => (
+          {sendingControlCards.map((card, idx) => (
             <Card key={idx} {...card} onClick={() => console.log(`Clicked ${card.title}`)} />
           ))}
         </div>

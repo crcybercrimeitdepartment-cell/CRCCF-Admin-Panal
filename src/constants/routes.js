@@ -4,5 +4,27 @@ export const ROUTES = {
   SOFTWARE_PRODUCTS: '/software-products',
   SKILL_DEVELOPMENT: '/skill-development',
   CAREERS: '/careers',
-  INSIGHTS: '/insights'
+  INSIGHTS: '/insights',
+
+  // Gallery Management Routes
+  GALLERY_JOURNEY: '/admin/gallery-management/journey',
+  GALLERY_COURSE: '/admin/gallery-management/course',
+  GALLERY_STUDY: '/admin/gallery-management/study',
+  GALLERY_INTENSIVE: '/admin/gallery-management/intensive',
+  GALLERY_PHOTO_PROJECT: '/admin/gallery-management/photo-project',
+  GALLERY_EVENT: '/admin/gallery-management/event',
+  GALLERY_EMPLOYEE: '/admin/gallery-management/employee',
+  GALLERY_ANNUAL_CELEBRATION: '/admin/gallery-management/annual-celebration',
+  GALLERY_ACHIEVEMENT: '/admin/gallery-management/achievement',
+  GALLERY_WORK_HIGHLIGHT: '/admin/gallery-management/work-highlight',
+  GALLERY_SUCCESS_STORY: '/admin/gallery-management/success-story',
+  GALLERY_WORKPLACE: '/admin/gallery-management/workplace',
+  GALLERY_SEMINAR_WORKSHOP: '/admin/gallery-management/seminar-workshop',
+  GALLERY_CYBER_AWARENESS: '/admin/gallery-management/cyber-awareness',
+  GALLERY_OFFICE_CULTURE: '/admin/gallery-management/office-culture',
+  GALLERY_AWARD_RECOGNITION: '/admin/gallery-management/award-recognition',
+  GALLERY_PRODUCT_LAUNCH: '/admin/gallery-management/product-launch',
+  GALLERY_TEAM_MOMENT: '/admin/gallery-management/team-moment',
+  GALLERY_MEDIA_PRESS_RELEASE: '/admin/gallery-management/media-press-release',
+  GALLERY_STUDENT_ACTIVITIES: '/admin/gallery-management/student-activities',
 };

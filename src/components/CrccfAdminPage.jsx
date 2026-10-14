@@ -17,6 +17,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { PhoneCall, UserCheck, User, FileSpreadsheet, Search, Globe, Share2, Car, Building2, Landmark, Mail, ShieldAlert, Map, GraduationCap, Stethoscope, ShieldCheck, Navigation, Hotel, Fuel, Cpu, ChevronRight, Lock, Zap, Heart, Calendar, Clock, MessageSquare, HelpCircle, History, CreditCard, Train, AlertTriangle, Settings, Bell, LayoutDashboard, Layers, LogOut, Coins, Users, MessageCircle, Camera, Hash, Briefcase, Send, Smartphone, PlaySquare, FileText, Activity, Key, Shield, FileSignature, MapPin, TrendingUp, GitMerge, Grid, BarChart, FileCheck, Book, Scale, Gavel, FileSearch, AlertCircle, Bookmark, Scroll, Folder, Database, Info, BookOpen, Flame, Plane, ShoppingCart, Baby, Award, Rocket, Copyright, Lightbulb, Ship, Utensils, Pill, Factory, Store, Wine, PiggyBank, Handshake, ScanLine, Wind, CheckCircle, Home, Target, Shuffle, Filter, Scissors, ClipboardList, LineChart, UserPlus, UserMinus, UserX, Moon, PlayCircle, Network, Crosshair, Eye, Flag, Star, Brain, LifeBuoy, Phone, CalendarCheck, X } from 'lucide-react';
 import Cloudinary from '../constants/Cloudinary';
+import HeaderSearchBar from './common/HeaderSearchBar';
 
 const cyberCrimeLogo = Cloudinary.logo;
 const crccfLogoHeader = Cloudinary.logo;
@@ -158,12 +159,20 @@ export function Header({ searchQuery = "", onSearchChange = () => { }, onHeaderI
       label: 'Logout', 
       Icon: LogOut, 
       isLogout: true, 
-      onClick: () => { sessionStorage.removeItem('isAuthenticated'); window.location.reload(); } 
+      onClick: () => { 
+        sessionStorage.removeItem('isAuthenticated'); 
+        sessionStorage.removeItem('currentUser');
+        sessionStorage.setItem('crccf_nav_app', 'Login');
+        window.dispatchEvent(new CustomEvent('crccf-internal-navigate', { detail: { scope: 'app', view: 'Login' } }));
+        if (typeof onHeaderIconClick === 'function') {
+          onHeaderIconClick('Login');
+        }
+      } 
     },
   ];
 
   return (
-    <header className="w-full relative font-sans">
+    <header className="w-full relative font-sans z-50">
       
       {/* ========================================================================= */}
       {/* 📱 MOBILE VIEW ONLY (md:hidden)                                           */}
@@ -239,20 +248,13 @@ export function Header({ searchQuery = "", onSearchChange = () => { }, onHeaderI
           </>
         )}
 
-        {/* 2. SEARCH BAR: Directly below header, full available mobile width */}
-        <div className="w-full px-2.5">
-          <div className="relative w-full shadow-xs rounded-full bg-white border border-slate-200 focus-within:border-[#1D6CE0] focus-within:ring-2 focus-within:ring-[#1D6CE0]/20 transition-all flex items-center overflow-hidden h-8.5">
-            <div className="flex items-center justify-center pl-3 text-[#0B3B73]">
-              <Search size={14} strokeWidth={2.5} />
-            </div>
-            <input 
-              type="text" 
-              placeholder="Search records, users, reports..." 
-              value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full h-full pl-2 pr-3 bg-transparent text-[12px] text-[#0B3B73] placeholder-slate-400 font-medium focus:outline-none"
-            />
-          </div>
+        {/* 2. SEARCH BAR: Directly below header, full available mobile width with inline dropdown */}
+        <div className="w-full px-2.5 relative z-30">
+          <HeaderSearchBar 
+            isMobile={true} 
+            placeholder="Search records, users, reports..." 
+            onSearch={onSearchChange} 
+          />
         </div>
 
         {/* 3. EIGHT CONTROL ICONS — SINGLE HORIZONTAL ROW */}
@@ -294,7 +296,7 @@ export function Header({ searchQuery = "", onSearchChange = () => { }, onHeaderI
       {/* 💻 DESKTOP / TABLET VIEW ONLY (hidden md:flex)                           */}
       {/* 100% UNCHANGED: Spacing, dimensions, positioning, components & functions  */}
       {/* ========================================================================= */}
-      <div className="hidden md:flex w-full h-auto min-h-[185px] xl:h-[190px] bg-gradient-to-r from-[#F0F5FA] to-[#E2EDF8] flex-row items-center justify-between border-b border-slate-300 shadow-sm relative overflow-hidden font-sans py-0 gap-0">
+      <div className="hidden md:flex w-full h-auto min-h-[185px] xl:h-[190px] bg-gradient-to-r from-[#F0F5FA] to-[#E2EDF8] flex-row items-center justify-between border-b border-slate-300 shadow-sm relative overflow-visible font-sans py-0 gap-0 z-30">
         
         {/* 1 & 2. Left Section: Logo Badge & 4 Compact Control Cards Grouped Together */}
         <div className="flex flex-row items-center gap-2 xl:gap-3.5 pl-3 pr-0 xl:pl-6 shrink-0 z-10 w-auto">
@@ -337,7 +339,7 @@ export function Header({ searchQuery = "", onSearchChange = () => { }, onHeaderI
         </div>
 
         {/* 3. Center Section: Title, Prominent 2-Row Officer Details & Search Bar */}
-        <div className="flex-1 min-w-0 max-w-xl xl:max-w-2xl px-2 mx-1 xl:mx-3 relative z-10 flex flex-col items-center justify-center gap-1.5 xl:gap-2.5 h-full py-1.5">
+        <div className="flex-1 min-w-0 max-w-xl xl:max-w-2xl px-2 mx-1 xl:mx-3 relative z-40 flex flex-col items-center justify-center gap-1.5 xl:gap-2.5 h-full py-1.5">
           {/* Title Block */}
           <div className="flex flex-col items-center">
             <h2 className="text-[21px] xl:text-[25px] font-black text-[#0B3B73] leading-none tracking-wider text-center uppercase drop-shadow-2xs">
@@ -351,19 +353,12 @@ export function Header({ searchQuery = "", onSearchChange = () => { }, onHeaderI
           {/* Dynamic Admin Officer Details Card */}
           <OfficerInfoContent currentOfficer={currentOfficer} isMobile={false} />
 
-          {/* Search Bar */}
-          <div className="relative w-full max-w-[320px] xl:max-w-[380px] shadow-xs rounded-full bg-white border border-slate-200 focus-within:border-[#1D6CE0] focus-within:ring-2 focus-within:ring-[#1D6CE0]/20 transition-all flex overflow-hidden h-8.5 xl:h-9 shrink-0">
-            <div className="flex items-center justify-center pl-3.5 text-[#0B3B73]">
-              <Search size={14} strokeWidth={2.5} />
-            </div>
-            <input 
-              type="text" 
-              placeholder="Search records, users, reports..." 
-              value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full h-full pl-2.5 pr-4 bg-transparent text-[12px] xl:text-[12.5px] text-[#0B3B73] placeholder-slate-400 font-medium focus:outline-none"
-            />
-          </div>
+          {/* Search Bar with inline suggestions dropdown */}
+          <HeaderSearchBar 
+            isMobile={false} 
+            placeholder="Search records, users, reports..." 
+            onSearch={onSearchChange} 
+          />
         </div>
 
         {/* 4. Right Menu Buttons (Dashboard Setting, 2 Demo tabs & Logout) */}
@@ -399,7 +394,15 @@ export function Header({ searchQuery = "", onSearchChange = () => { }, onHeaderI
 
           {/* Logout Button */}
           <div 
-            onClick={() => { sessionStorage.removeItem('isAuthenticated'); window.location.reload(); }}
+            onClick={() => { 
+              sessionStorage.removeItem('isAuthenticated'); 
+              sessionStorage.removeItem('currentUser');
+              sessionStorage.setItem('crccf_nav_app', 'Login');
+              window.dispatchEvent(new CustomEvent('crccf-internal-navigate', { detail: { scope: 'app', view: 'Login' } }));
+              if (typeof onHeaderIconClick === 'function') {
+                onHeaderIconClick('Login');
+              }
+            }}
             className="flex flex-col items-center justify-start cursor-pointer group w-[54px] xl:w-[62px] p-0.5"
           >
             <div className="w-[36px] h-[36px] xl:w-[42px] xl:h-[42px] rounded-full flex items-center justify-center shadow-inner transition-all mb-1 shrink-0 bg-[#E5EEFA] text-[#0B3B73] group-hover:bg-red-50 group-hover:text-red-600 group-hover:scale-105 group-hover:shadow-xs">
@@ -415,7 +418,7 @@ export function Header({ searchQuery = "", onSearchChange = () => { }, onHeaderI
         </div>
 
         {/* 5. Far Right Government Emblem Section */}
-        <div className="relative h-full w-[185px] xl:w-[215px] shrink-0 block">
+        <div className="relative h-full w-[185px] xl:w-[215px] shrink-0 block overflow-hidden">
           {/* The solid green background connecting seamlessly with the curve */}
           <div className="absolute inset-y-0 right-0 left-[55px] bg-[#01352A] z-0" />
 

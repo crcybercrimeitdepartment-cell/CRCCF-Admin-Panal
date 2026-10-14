@@ -33,19 +33,69 @@ function setScrollPosition(top) {
 }
 
 /**
- * Custom hook to manage view navigation with intelligent scroll restoration.
- * - When navigating forward to a new view/card:
- *   Saves the current scroll position and resets scroll to top (0, 0).
- * - When navigating backward (e.g. clicking Back button):
- *   Restores the exact scroll position where the card was clicked.
+ * Custom hook to manage view navigation with intelligent scroll restoration
+ * and browser History API integration (locked to root URL '/').
+ * - When navigating forward: saves scroll, resets to top, and pushes history state with url='/'.
+ * - When navigating backward (or browser Back): restores scroll and view while keeping url='/'.
+ * - Preserves view across page reloads via history state / sessionStorage.
  */
-export function useScrollNavigation(initialView = 'main') {
-  const [currentView, setCurrentView] = useState(initialView);
+export function useScrollNavigation(initialView = 'main', options = {}) {
+  const scope = typeof options === 'string' ? options : (options.scope || 'default');
+
+  // Read persisted state on reload if available
+  const getSavedView = () => {
+    if (typeof window === 'undefined') return initialView;
+    try {
+      if (scope === 'app') {
+        return 'Login';
+      }
+      const state = window.history.state;
+      if (state && typeof state === 'object' && state[scope]) return state[scope];
+      const session = sessionStorage.getItem(`crccf_nav_${scope}`);
+      if (session) return session;
+    } catch {
+      // fallback to initialView
+    }
+    return initialView;
+  };
+
+  const [currentView, setCurrentView] = useState(getSavedView);
   const scrollPositions = useRef({});
   const isBackNav = useRef(false);
   const targetY = useRef(0);
 
+  // Sync state to history and sessionStorage (always locked to root URL '/')
+  const syncToHistory = useCallback((nextView, isReplace = false) => {
+    if (typeof window === 'undefined') return;
+    try {
+      const existingState = (window.history.state && typeof window.history.state === 'object')
+        ? { ...window.history.state }
+        : {};
+      const newState = {
+        ...existingState,
+        [scope]: nextView,
+        _time: Date.now()
+      };
+      sessionStorage.setItem(`crccf_nav_${scope}`, nextView);
+
+      // GUARANTEED: The visible URL in the address bar is strictly '/'
+      if (isReplace) {
+        window.history.replaceState(newState, '', '/');
+      } else {
+        window.history.pushState(newState, '', '/');
+      }
+    } catch {
+      // ignore storage errors
+    }
+  }, [scope]);
+
+  // Initial mount: ensure history state is initialized at root URL '/'
+  useEffect(() => {
+    syncToHistory(currentView, true);
+  }, []); // run once on mount
+
   const navigateTo = useCallback((nextView) => {
+    if (nextView === currentView) return;
     const currentY = getScrollPosition();
     scrollPositions.current[currentView] = currentY;
     isBackNav.current = false;
@@ -55,14 +105,48 @@ export function useScrollNavigation(initialView = 'main') {
     setScrollPosition(0);
 
     setCurrentView(nextView);
-  }, [currentView]);
+    syncToHistory(nextView, false);
+  }, [currentView, syncToHistory]);
 
   const goBack = useCallback((prevView) => {
     const restoreY = scrollPositions.current[prevView] ?? 0;
     isBackNav.current = true;
     targetY.current = restoreY;
     setCurrentView(prevView);
-  }, []);
+    syncToHistory(prevView, false);
+  }, [syncToHistory]);
+
+  // Listen for browser Back/Forward (popstate) and internal cross-component navigation
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handlePopState = (e) => {
+      const state = e.state;
+      if (state && typeof state === 'object' && state[scope]) {
+        const targetView = state[scope];
+        if (targetView !== currentView) {
+          isBackNav.current = true;
+          targetY.current = scrollPositions.current[targetView] ?? 0;
+          setCurrentView(targetView);
+        }
+      }
+    };
+
+    const handleInternalNav = (e) => {
+      const detail = e.detail;
+      if (detail && detail.scope === scope && detail.view) {
+        navigateTo(detail.view);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    window.addEventListener('crccf-internal-navigate', handleInternalNav);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('crccf-internal-navigate', handleInternalNav);
+    };
+  }, [scope, currentView, navigateTo]);
 
   useEffect(() => {
     if (isBackNav.current) {
